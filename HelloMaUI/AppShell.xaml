@@ -10,10 +10,10 @@
 
     <TabBar>
         <ShellContent
-            Title="Home"
-            Icon="{OnPlatform 'icon_notes.png'}"
-            ContentTemplate="{DataTemplate local:MainPage}"
-            Route="MainPage" />
+             Title="Note"
+             Icon="{OnPlatform 'icon_notes.png'}"
+             ContentTemplate="{DataTemplate local:NotePage}"
+             Route="NotePage" />
         <ShellContent
             Title="About"
             Icon="{OnPlatform 'icon_about.png'}"
