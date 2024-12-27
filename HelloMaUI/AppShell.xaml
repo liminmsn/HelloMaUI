@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="HelloMaUI.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:HelloMaUI"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False"
+    Title="HelloMaUI">
+
+    <TabBar>
+        <ShellContent
+            Title="Home"
+            Icon="{OnPlatform 'icon_notes.png'}"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage" />
+        <ShellContent
+            Title="About"
+            Icon="{OnPlatform 'icon_about.png'}"
+            ContentTemplate="{DataTemplate local:AboutPage}"
+            Route="AboutPage" />
+    </TabBar>
+</Shell>
