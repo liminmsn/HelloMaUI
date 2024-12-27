@@ -5,15 +5,16 @@ public partial class NotePage : ContentPage
     public NotePage()
     {
         InitializeComponent();
-        if (File.Exists(_fileName))
-        {
-            TextEdit.Text = File.ReadAllText(_fileName);
-        }
+
+        string appDataPath = FileSystem.AppDataDirectory;
+        string randomFileName = $"{Path.GetRandomFileName()}.notes.txt";
+
+        LoadNote(Path.Combine(appDataPath, randomFileName));
     }
 
     private void Button_Clicked(object sender, EventArgs e)
     {
-        if(sender is Microsoft.Maui.Controls.Button button)
+        if (sender is Microsoft.Maui.Controls.Button button)
         {
             string btn_key = button.Text;
             switch (btn_key)
@@ -30,5 +31,17 @@ public partial class NotePage : ContentPage
                     break;
             }
         }
+    }
+    private void LoadNote(string fileName)
+    {
+        Models.Note noteModel = new Models.Note();
+        noteModel.Filename = fileName;
+        if (File.Exists(_fileName))
+        {
+            noteModel.Date = File.GetCreationTime(_fileName);
+            noteModel.Text = File.ReadAllText(fileName);
+        }
+
+        BindingContext = noteModel;
     }
 }

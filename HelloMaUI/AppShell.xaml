@@ -3,21 +3,20 @@
     x:Class="HelloMaUI.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:HelloMaUI"
+    xmlns:local="clr-namespace:HelloMaUI.Views"
     Shell.FlyoutBehavior="Disabled"
     Shell.NavBarIsVisible="False"
     Title="HelloMaUI">
 
     <TabBar>
         <ShellContent
-             Title="Note"
-             Icon="{OnPlatform 'icon_notes.png'}"
-             ContentTemplate="{DataTemplate local:NotePage}"
-             Route="NotePage" />
+            Title="Notes"
+            ContentTemplate="{DataTemplate local:NotePage}"
+            Icon="{OnPlatform 'icon_notes.png', iOS='icon_notes_ios.png', MacCatalyst='icon_notes_ios.png'}" />
+
         <ShellContent
             Title="About"
-            Icon="{OnPlatform 'icon_about.png'}"
             ContentTemplate="{DataTemplate local:AboutPage}"
-            Route="AboutPage" />
+            Icon="{OnPlatform 'icon_about.png', iOS='icon_about_ios.png', MacCatalyst='icon_about_ios.png'}" />
     </TabBar>
 </Shell>
