@@ -1,4 +1,5 @@
-﻿namespace HelloMaUI
+﻿
+namespace HelloMaUI
 {
     public partial class App : Application
     {
@@ -9,7 +10,11 @@
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new AppShell());
+            var win = new Window(new AppShell())
+            {
+                MinimumWidth = 500
+            };
+            return win;
         }
     }
 }

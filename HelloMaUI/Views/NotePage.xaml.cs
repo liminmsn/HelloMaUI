@@ -1,4 +1,6 @@
 namespace HelloMaUI.Views;
+
+[QueryProperty(nameof(ItemId), nameof(ItemId))]
 public partial class NotePage : ContentPage
 {
     string _fileName = Path.Combine(FileSystem.AppDataDirectory, "notes.txt");
@@ -12,7 +14,7 @@ public partial class NotePage : ContentPage
         LoadNote(Path.Combine(appDataPath, randomFileName));
     }
 
-    private void Button_Clicked(object sender, EventArgs e)
+    private async void Button_Clicked(object sender, EventArgs e)
     {
         if (sender is Microsoft.Maui.Controls.Button button)
         {
@@ -21,21 +23,27 @@ public partial class NotePage : ContentPage
             {
                 case "Save":
                     File.WriteAllText(_fileName, TextEdit.Text);
+                    await Shell.Current.GoToAsync("..");
                     break;
                 case "Delete":
-                    if (File.Exists(_fileName))
+                    if (BindingContext is Models.Note note)
                     {
-                        File.Delete(_fileName);
+                        // Delete the file.
+                        if (File.Exists(note.Filename))
+                            File.Delete(note.Filename);
                     }
-                    TextEdit.Text = string.Empty;
+
+                    await Shell.Current.GoToAsync("..");
                     break;
             }
         }
     }
     private void LoadNote(string fileName)
     {
-        Models.Note noteModel = new Models.Note();
-        noteModel.Filename = fileName;
+        Models.Note noteModel = new()
+        {
+            Filename = fileName
+        };
         if (File.Exists(_fileName))
         {
             noteModel.Date = File.GetCreationTime(_fileName);
@@ -43,5 +51,10 @@ public partial class NotePage : ContentPage
         }
 
         BindingContext = noteModel;
+    }
+
+    public string ItemId
+    {
+        set { LoadNote(value); }
     }
 }
