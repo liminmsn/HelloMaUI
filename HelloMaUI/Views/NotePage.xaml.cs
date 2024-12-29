@@ -39,7 +39,7 @@ public partial class NotePage : ContentPage
         if (File.Exists(_fileName))
         {
             noteModel.Date = File.GetCreationTime(_fileName);
-            noteModel.Text = File.ReadAllText(fileName);
+            noteModel.Text = File.ReadAllText(_fileName);
         }
 
         BindingContext = noteModel;
