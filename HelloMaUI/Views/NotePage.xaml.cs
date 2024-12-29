@@ -3,7 +3,6 @@ namespace HelloMaUI.Views;
 [QueryProperty(nameof(ItemId), nameof(ItemId))]
 public partial class NotePage : ContentPage
 {
-    string _fileName = Path.Combine(FileSystem.AppDataDirectory, "notes.txt");
     public NotePage()
     {
         InitializeComponent();
@@ -22,17 +21,17 @@ public partial class NotePage : ContentPage
             switch (btn_key)
             {
                 case "Save":
-                    File.WriteAllText(_fileName, TextEdit.Text);
+                    if (BindingContext is Models.Note note)
+                        File.WriteAllText(note.Filename, TextEdit.Text);
                     await Shell.Current.GoToAsync("..");
                     break;
                 case "Delete":
-                    if (BindingContext is Models.Note note)
+                    if (BindingContext is Models.Note note_)
                     {
                         // Delete the file.
-                        if (File.Exists(note.Filename))
-                            File.Delete(note.Filename);
+                        if (File.Exists(note_.Filename))
+                            File.Delete(note_.Filename);
                     }
-
                     await Shell.Current.GoToAsync("..");
                     break;
             }
@@ -44,10 +43,10 @@ public partial class NotePage : ContentPage
         {
             Filename = fileName
         };
-        if (File.Exists(_fileName))
+        if (File.Exists(fileName))
         {
-            noteModel.Date = File.GetCreationTime(_fileName);
-            noteModel.Text = File.ReadAllText(_fileName);
+            noteModel.Date = File.GetCreationTime(fileName);
+            noteModel.Text = File.ReadAllText(fileName);
         }
 
         BindingContext = noteModel;
